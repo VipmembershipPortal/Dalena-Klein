@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YUNGBLUD — Profile Settings</title>
+<style>
+:root{
+  --bg:#09090b;--panel:#121216;--panel2:#19191f;--pink:#ff2b78;--cream:#f7f2e8;
+  --muted:#aaa5ad;--line:rgba(255,255,255,.09);--gold:#e8c56b;--green:#67d49c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:
+radial-gradient(circle at 82% 8%,rgba(255,43,120,.18),transparent 25%),
+radial-gradient(circle at 18% 88%,rgba(232,197,107,.08),transparent 25%),var(--bg);
+color:var(--cream);font-family:Inter,Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{position:fixed;z-index:20;width:250px;inset:0 auto 0 0;background:rgba(12,12,15,.95);
+border-right:1px solid var(--line);padding:24px 17px;transition:.3s}
+.brand{display:flex;gap:12px;align-items:center;padding:5px 9px 31px}
+.brandmark{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#f4eee0;color:#0b0b0d;font-weight:950;font-size:15px;transform:rotate(-8deg)}
+.brand strong{font-size:15px;letter-spacing:1.5px}.brand small{display:block;color:#77727b;font-size:8px;letter-spacing:2px;margin-top:3px}
+.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#9d98a0;text-align:left;border-radius:12px;padding:12px 13px;cursor:pointer;font-size:12px;display:flex;gap:12px;align-items:center}
+.nav button.active,.nav button:hover{color:#fff;background:linear-gradient(90deg,rgba(255,43,120,.16),transparent)}
+.nav i{width:20px;text-align:center;font-style:normal;font-size:15px}
+.side-note{position:absolute;left:27px;right:25px;bottom:25px;border-top:1px solid var(--line);padding-top:16px;color:#6e6971;font-size:9px;line-height:1.7}
+.main{margin-left:250px;width:calc(100% - 250px);padding:25px 32px 45px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.top-left{display:flex;gap:13px;align-items:center}.menu{display:none;background:#131317;border:1px solid var(--line);border-radius:10px;padding:8px;color:#fff}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:2.6px;color:var(--pink)}
+h1{font-size:25px;margin-top:5px}
+.actions{display:flex;gap:9px;align-items:center}.icon,.profile{border:1px solid var(--line);background:#111115;border-radius:11px;padding:10px 12px;color:#ddd;cursor:pointer}
+.profile{display:flex;gap:8px;align-items:center}.avatar{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff2b78,#29212a);font-size:9px;font-weight:800}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(285px,.65fr);gap:20px;align-items:start}
+.panel{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+border:1px solid var(--line);border-radius:21px;box-shadow:0 22px 70px rgba(0,0,0,.28)}
+.panel-pad{padding:21px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.section-head h2,.section-head h3{font-size:14px}.section-head span{font-size:9px;color:#77727a}
+
+.profile-hero{display:flex;align-items:center;gap:17px;padding:21px;border-bottom:1px solid var(--line)}
+.big-avatar{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;flex:none;
+background:radial-gradient(circle at 30% 20%,#ff77a8,transparent 35%),linear-gradient(135deg,#ff2b78,#251923);
+border:1px solid rgba(255,255,255,.18);font-size:22px;font-weight:900;box-shadow:0 12px 35px rgba(255,43,120,.15)}
+.hero-info h2{font-size:19px;margin-bottom:5px}.hero-info p{font-size:9px;color:#77727a;line-height:1.6}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.badge{font-size:7px;letter-spacing:1px;padding:6px 8px;border-radius:20px;border:1px solid var(--line);color:#aaa5ad}
+.badge.pink{color:#fff;border-color:rgba(255,43,120,.3);background:rgba(255,43,120,.08)}
+.badge.gold{color:#e8c56b;border-color:rgba(232,197,107,.2)}
+
+.form{padding:21px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+.field label{font-size:8px;text-transform:uppercase;letter-spacing:1.4px;color:#77727a}
+.field input,.field select{width:100%;background:#0e0e11;border:1px solid var(--line);border-radius:10px;padding:11px 12px;color:#e9e4eb;outline:none;font-size:10px}
+.field input:focus,.field select:focus{border-color:rgba(255,43,120,.5);box-shadow:0 0 0 3px rgba(255,43,120,.06)}
+.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;padding-top:17px;border-top:1px solid var(--line)}
+.btn{border:1px solid var(--line);background:#121216;color:#c8c3ca;border-radius:10px;padding:9px 13px;font-size:9px}
+.btn:hover{border-color:rgba(255,43,120,.4);color:#fff}
+.btn.primary{border:0;background:linear-gradient(135deg,#ff2b78,#ff5b91);color:#fff;font-weight:800}
+
+.right{display:grid;gap:19px}
+.settings-card{padding:20px}
+.setting-row{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid var(--line)}
+.setting-row:last-child{border:0}
+.setting-icon{width:34px;height:34px;border-radius:9px;background:#1d1b21;display:grid;place-items:center;color:var(--pink);flex:none}
+.setting-copy{min-width:0}.setting-copy strong{display:block;font-size:9px;margin-bottom:3px}.setting-copy span{font-size:8px;color:#77727a;line-height:1.4}
+.switch{margin-left:auto;width:36px;height:20px;border-radius:20px;background:#2a292e;border:1px solid var(--line);position:relative;cursor:pointer;flex:none}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:#77727a;transition:.25s}
+.switch.on{background:rgba(255,43,120,.25);border-color:rgba(255,43,120,.4)}
+.switch.on:after{left:19px;background:var(--pink);box-shadow:0 0 10px rgba(255,43,120,.5)}
+
+.account-box{border:1px solid rgba(255,43,120,.18);border-radius:14px;padding:15px;background:radial-gradient(circle at 90% 0,rgba(255,43,120,.1),transparent 50%)}
+.account-box strong{font-size:17px}.account-box p{font-size:8px;color:#77727a;line-height:1.6;margin:5px 0 14px}
+.account-meta{display:flex;justify-content:space-between;font-size:8px;color:#77727a;padding-top:10px;border-top:1px solid var(--line)}
+.account-meta span:last-child{color:var(--green)}
+
+.danger{padding:20px}
+.danger-box{border:1px solid rgba(255,77,77,.16);border-radius:14px;padding:14px;background:rgba(255,77,77,.025)}
+.danger-box h4{font-size:10px;color:#ff7777;margin-bottom:5px}.danger-box p{font-size:8px;color:#77727a;line-height:1.6;margin-bottom:12px}
+.danger-btn{border:1px solid rgba(255,77,77,.25);background:transparent;color:#ff7777;border-radius:9px;padding:8px 10px;font-size:8px}
+.danger-btn:hover{background:rgba(255,77,77,.07)}
+
+.toast{position:fixed;right:24px;bottom:23px;background:#18171c;border:1px solid rgba(255,43,120,.3);
+padding:12px 15px;border-radius:11px;font-size:10px;opacity:0;transform:translateY(100px);transition:.3s;z-index:50}
+.toast.show{opacity:1;transform:none}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;place-items:center;z-index:40;padding:20px}
+.modal.open{display:grid}.modalbox{width:min(430px,100%);background:#121216;border:1px solid var(--line);border-radius:19px;padding:21px}
+.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.modalhead h3{font-size:15px}.close{background:none;border:0;color:#aaa;font-size:15px}
+.modal p{font-size:9px;color:#858087;line-height:1.7;margin-bottom:15px}
+.modal-actions{display:flex;gap:8px}.modal-actions button{flex:1}
+
+@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:none}.main{margin-left:0;width:100%;padding:20px}.menu{display:block}}
+@media(max-width:600px){
+.main{padding:15px}.topbar h1{font-size:20px}.profile span:last-child{display:none}
+.panel{border-radius:17px}.profile-hero,.form,.settings-card,.danger{padding:16px}
+.big-avatar{width:63px;height:63px;font-size:18px}.hero-info h2{font-size:16px}
+.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.form-actions{justify-content:stretch}.form-actions .btn{flex:1}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+<div class="brand"><div class="brandmark">YB</div><div><strong>YUNGBLUD</strong><small>FAN VIP PORTAL</small></div></div>
+<nav class="nav">
+<button class="active" onclick="window.location.href='dashboard.html'">
+  <i>⌂</i> Dashboard
+</button>
+
+<button onclick="window.location.href='membership.html'">
+  <i>◇</i> My Membership Card
+</button>
+
+
+
+<button onclick="window.location.href='activity.html'">
+  <i>↗</i> Fan Activity
+</button>
+
+<button onclick="window.location.href='profile.html'">
+  <i>⚙</i> Profile Settings
+</button>
+</nav>
+<div class="side-note">OFFICIAL FAN PROJECT<br>This portal is an official fan-club membership platform operated by the authorized fan-club organization. Membership access, benefits, and services are subject to the applicable fan-club terms and conditions.
+.</div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+<div class="top-left"><button class="menu" onclick="toggleSide()">☰</button><div><div class="kicker">YUNGBLUD • Fan Membership</div><h1>Profile Settings</h1></div></div>
+<div class="actions"><button class="icon" onclick="toast('No new fan notifications')">◌</button><button class="profile"><span class="avatar">AC</span><span>Dalena Klein</span>⌄</button></div>
+</header>
+
+<section class="grid">
+<div class="panel">
+<div class="profile-hero">
+<div class="big-avatar">AC</div>
+<div class="hero-info">
+<h2>Dalena Klein</h2>
+<p>Manage your VIP fan profile, membership details, preferences, and account settings.
+</p>
+<div class="badges"><span class="badge pink">DIAMOND FAN</span><span class="badge gold">28,640 POINTS</span><span class="badge">MEMBER SINCE 2026</span></div>
+</div>
+</div>
+
+<div class="form">
+<div class="section-head"><h2>Personal information</h2><span>Demo profile</span></div>
+<div class="form-grid">
+<div class="field"><label>First name</label><input id="firstName" value="Dalena"></div>
+<div class="field"><label>Last name</label><input id="lastName" value="Mildred Klein"></div>
+<div class="field full"><label>Email address</label><input id="email" type="email" value="dalenaklein4770@gmail.com"></div>
+<div class="field"><label>Fan display name</label><input id="displayName" value="Dalena Mildred Klein"></div>
+<div class="field">
+  <label>Country</label>
+  <select id="country">
+    <option>United States</option>
+    <option>Afghanistan</option>
+    <option>Albania</option>
+    <option>Algeria</option>
+    <option>Andorra</option>
+    <option>Angola</option>
+    <option>Antigua and Barbuda</option>
+    <option>Argentina</option>
+    <option>Armenia</option>
+    <option>Australia</option>
+    <option>Austria</option>
+    <option>Azerbaijan</option>
+    <option>Bahamas</option>
+    <option>Bahrain</option>
+    <option>Bangladesh</option>
+    <option>Barbados</option>
+    <option>Belarus</option>
+    <option>Belgium</option>
+    <option>Belize</option>
+    <option>Benin</option>
+    <option>Bhutan</option>
+    <option>Bolivia</option>
+    <option>Bosnia and Herzegovina</option>
+    <option>Botswana</option>
+    <option>Brazil</option>
+    <option>Brunei</option>
+    <option>Bulgaria</option>
+    <option>Burkina Faso</option>
+    <option>Burundi</option>
+    <option>Cabo Verde</option>
+    <option>Cambodia</option>
+    <option>Cameroon</option>
+    <option>Canada</option>
+    <option>Central African Republic</option>
+    <option>Chad</option>
+    <option>Chile</option>
+    <option>China</option>
+    <option>Colombia</option>
+    <option>Comoros</option>
+    <option>Congo, Democratic Republic of the</option>
+    <option>Congo, Republic of the</option>
+    <option>Costa Rica</option>
+    <option>Côte d'Ivoire</option>
+    <option>Croatia</option>
+    <option>Cuba</option>
+    <option>Cyprus</option>
+    <option>Czechia</option>
+    <option>Denmark</option>
+    <option>Djibouti</option>
+    <option>Dominica</option>
+    <option>Dominican Republic</option>
+    <option>Ecuador</option>
+    <option>Egypt</option>
+    <option>El Salvador</option>
+    <option>Equatorial Guinea</option>
+    <option>Eritrea</option>
+    <option>Estonia</option>
+    <option>Eswatini</option>
+    <option>Ethiopia</option>
+    <option>Fiji</option>
+    <option>Finland</option>
+    <option>France</option>
+    <option>Gabon</option>
+    <option>Gambia</option>
+    <option>Georgia</option>
+    <option>Germany</option>
+    <option>Ghana</option>
+    <option>Greece</option>
+    <option>Grenada</option>
+    <option>Guatemala</option>
+    <option>Guinea</option>
+    <option>Guinea-Bissau</option>
+    <option>Guyana</option>
+    <option>Haiti</option>
+    <option>Honduras</option>
+    <option>Hungary</option>
+    <option>Iceland</option>
+    <option>India</option>
+    <option>Indonesia</option>
+    <option>Iran</option>
+    <option>Iraq</option>
+    <option>Ireland</option>
+    <option>Israel</option>
+    <option>Italy</option>
+    <option>Jamaica</option>
+    <option>Japan</option>
+    <option>Jordan</option>
+    <option>Kazakhstan</option>
+    <option>Kenya</option>
+    <option>Kiribati</option>
+    <option>Kuwait</option>
+    <option>Kyrgyzstan</option>
+    <option>Laos</option>
+    <option>Latvia</option>
+    <option>Lebanon</option>
+    <option>Lesotho</option>
+    <option>Liberia</option>
+    <option>Libya</option>
+    <option>Liechtenstein</option>
+    <option>Lithuania</option>
+    <option>Luxembourg</option>
+    <option>Madagascar</option>
+    <option>Malawi</option>
+    <option>Malaysia</option>
+    <option>Maldives</option>
+    <option>Mali</option>
+    <option>Malta</option>
+    <option>Marshall Islands</option>
+    <option>Mauritania</option>
+    <option>Mauritius</option>
+    <option>Mexico</option>
+    <option>Micronesia</option>
+    <option>Moldova</option>
+    <option>Monaco</option>
+    <option>Mongolia</option>
+    <option>Montenegro</option>
+    <option>Morocco</option>
+    <option>Mozambique</option>
+    <option>Myanmar</option>
+    <option>Namibia</option>
+    <option>Nauru</option>
+    <option>Nepal</option>
+    <option>Netherlands</option>
+    <option>New Zealand</option>
+    <option>Nicaragua</option>
+    <option>Niger</option>
+    <option>Nigeria</option>
+    <option>North Korea</option>
+    <option>North Macedonia</option>
+    <option>Norway</option>
+    <option>Oman</option>
+    <option>Pakistan</option>
+    <option>Palau</option>
+    <option>Palestine</option>
+    <option>Panama</option>
+    <option>Papua New Guinea</option>
+    <option>Paraguay</option>
+    <option>Peru</option>
+    <option>Philippines</option>
+    <option>Poland</option>
+    <option>Portugal</option>
+    <option>Qatar</option>
+    <option>Romania</option>
+    <option>Russia</option>
+    <option>Rwanda</option>
+    <option>Saint Kitts and Nevis</option>
+    <option>Saint Lucia</option>
+    <option>Saint Vincent and the Grenadines</option>
+    <option>Samoa</option>
+    <option>San Marino</option>
+    <option>São Tomé and Príncipe</option>
+    <option>Saudi Arabia</option>
+    <option>Senegal</option>
+    <option>Serbia</option>
+    <option>Seychelles</option>
+    <option>Sierra Leone</option>
+    <option>Singapore</option>
+    <option>Slovakia</option>
+    <option>Slovenia</option>
+    <option>Solomon Islands</option>
+    <option>Somalia</option>
+    <option>South Africa</option>
+    <option>South Korea</option>
+    <option>South Sudan</option>
+    <option>Spain</option>
+    <option>Sri Lanka</option>
+    <option>Sudan</option>
+    <option>Suriname</option>
+    <option>Sweden</option>
+    <option>Switzerland</option>
+    <option>Syria</option>
+    <option>Taiwan</option>
+    <option>Tajikistan</option>
+    <option>Tanzania</option>
+    <option>Thailand</option>
+    <option>Timor-Leste</option>
+    <option>Togo</option>
+    <option>Tonga</option>
+    <option>Trinidad and Tobago</option>
+    <option>Tunisia</option>
+    <option>Türkiye</option>
+    <option>Turkmenistan</option>
+    <option>Tuvalu</option>
+    <option>Uganda</option>
+    <option>Ukraine</option>
+    <option>United Arab Emirates</option>
+    <option>United Kingdom</option>
+    
+    <option>Uruguay</option>
+    <option>Uzbekistan</option>
+    <option>Vanuatu</option>
+    <option>Vatican City</option>
+    <option>Venezuela</option>
+    <option>Vietnam</option>
+    <option>Yemen</option>
+    <option>Zambia</option>
+    <option>Zimbabwe</option>
+  </select>
+</div>
+<div class="field full"><label>Fan bio</label><input id="bio" value="YUNGBLUD fan • Music • Community"></div>
+</div>
+<div class="form-actions"><button class="btn" onclick="resetForm()">Reset</button><button class="btn primary" onclick="saveProfile()">Save changes</button></div>
+</div>
+</div>
+
+<div class="right">
+<div class="panel settings-card">
+<div class="section-head"><h3>Portal preferences</h3><span>Customize</span></div>
+<div class="setting-row"><div class="setting-icon">◌</div><div class="setting-copy"><strong>Fan notifications</strong><span>Receive alerts about activity and rewards.</span></div><div class="switch on" onclick="toggleSwitch(this,'Fan notifications')"></div></div>
+<div class="setting-row"><div class="setting-icon">✦</div><div class="setting-copy"><strong>Reward updates</strong><span>Show reward and points updates.</span></div><div class="switch on" onclick="toggleSwitch(this,'Reward updates')"></div></div>
+<div class="setting-row"><div class="setting-icon">◷</div><div class="setting-copy"><strong>Event reminders</strong><span>Receive reminders for fan events.</span></div><div class="switch" onclick="toggleSwitch(this,'Event reminders')"></div></div>
+<div class="setting-row"><div class="setting-icon">♡</div><div class="setting-copy"><strong>Community activity</strong><span>Display community activity in your timeline.</span></div><div class="switch on" onclick="toggleSwitch(this,'Community activity')"></div></div>
+</div>
+
+<div class="panel settings-card">
+<div class="section-head"><h3>Membership account</h3><span>Overview</span></div>
+<div class="account-box">
+<strong>DIAMOND FAN</strong>
+<p>Your fan membership profile is active and your account currently has access to all available membership features and benefits.
+</p>
+<div class="account-meta"><span>Member ID</span><span>YB-2847-6192</span></div>
+<div class="account-meta"><span>Status</span><span>ACTIVE</span></div>
+</div>
+</div>
+
+<div class="panel danger">
+<div class="section-head"><h3>Account actions</h3><span>Active Membership</span></div>
+<div class="danger-box">
+<h4>Reset Membership Profile</h4>
+<p>This resets the editable profile fields to the example values. No real account data is changed.</p>
+<button class="danger-btn" onclick="openReset()">Reset Membership Profile</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeReset()">
+<div class="modalbox">
+<div class="modalhead"><h3>Reset Membership Profile?</h3><button class="close" onclick="closeReset()">✕</button></div>
+<p>This will restore the sample profile information shown in the portal. This is an active membership account.</p>
+<div class="modal-actions"><button class="btn" onclick="closeReset()">Cancel</button><button class="btn primary" onclick="confirmReset()">Reset profile</button></div>
+</div>
+</div>
+
+<div class="toast" id="toastbox"></div>
+
+<script>
+const sidebar=document.getElementById('sidebar'),box=document.getElementById('toastbox');
+let timer;
+const defaults={firstName:'Dalena',lastName:'Carter',email:'dalenaklein4770@gmail.com',displayName:'Dalena Klein',country:'United States',bio:'YUNGBLUD fan • Music • Community'};
+
+function toggleSide(){sidebar.classList.toggle('open')}
+function toast(message){box.textContent=message;box.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>box.classList.remove('show'),2200)}
+
+function toggleSwitch(el,name){
+el.classList.toggle('on');
+toast(name+(el.classList.contains('on')?' enabled':' disabled'));
+}
+
+function saveProfile(){
+const first=document.getElementById('firstName').value.trim()||'Dalena';
+const last=document.getElementById('lastName').value.trim()||'Klein';
+const display=document.getElementById('displayName').value.trim()||first+' '+last;
+document.querySelector('.hero-info h2').textContent=display;
+document.querySelector('.profile span:nth-child(2)').textContent=display;
+document.querySelector('.avatar').textContent=(first[0]+(last[0]||'')).toUpperCase();
+document.querySelector('.big-avatar').textContent=(first[0]+(last[0]||'')).toUpperCase();
+toast('Profile changes saved to active profile');
+}
+
+function resetForm(){
+Object.keys(defaults).forEach(id=>document.getElementById(id).value=defaults[id]);
+toast('Form restored to active values');
+}
+
+function openReset(){document.getElementById('modal').classList.add('open')}
+function closeReset(){document.getElementById('modal').classList.remove('open')}
+function confirmReset(){resetForm();saveProfile();closeReset();toast('Membership profile reset successfully')}
+
+function go(name){
+document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+const buttons=[...document.querySelectorAll('.nav button')];
+const target=buttons.find(x=>x.textContent.trim().includes(name));
+if(target)target.classList.add('active');
+if(name!=='Profile Settings')toast(name+' selected');
+sidebar.classList.remove('open');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeReset()});
+</script>
+</body>
+</html>
